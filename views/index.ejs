@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+    <title>Visualization</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> 
+    <!-- load bootsrap css -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+</head>
+
+<body>
+
+
+<canvas id="myCanvas" width="800" height="400">Your browser does not support the canvas feature.</canvas>
+<canvas id="myCanvas2" width="800" height="400">Your browser does not support the canvas feature.</canvas>
+<div id="mydiv" data-ts_temperature=<%= data.ts_temperature %>></div>
+<div id="mydiv2" data-temperature=<%= data.temperature %>></div>
+<div id="mydiv3" data-ts_humidity=<%= data.ts_humidity %>></div>
+<div id="mydiv4" data-humidity=<%= data.humidity %>></div>
+<script type="text/javascript">
+    let canvas = document.getElementById("myCanvas");
+    let ctx = canvas.getContext("2d");
+
+    let myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: document.getElementById('mydiv').dataset.ts_temperature.split(','),
+            datasets: [{
+                label: 'Temperature',
+                data: document.getElementById('mydiv2').dataset.temperature.split(','),
+                backgroundColor: "rgb(150, 50, 50)"
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 50,
+                        stepSize: 5
+                    }
+                }]
+            }
+        }
+    })
+
+    let canvas2 = document.getElementById("myCanvas2");
+    let ctx2 = canvas2.getContext("2d");
+
+    let myChart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: document.getElementById('mydiv3').dataset.ts_humidity.split(','),
+            datasets: [{
+                label: 'Humidity',
+                data: document.getElementById('mydiv4').dataset.humidity.split(','),
+                backgroundColor: "rgb(50, 50, 150)"
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 100,
+                        stepSize: 10
+                    }
+                }]
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
